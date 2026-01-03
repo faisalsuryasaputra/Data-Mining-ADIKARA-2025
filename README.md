@@ -1,59 +1,57 @@
 # 🇮🇩 Indonesian Credit Default Prediction (ADIKARA 2025)
 
-![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
-![Scikit-Learn](https://img.shields.io/badge/Library-Scikit--Learn-orange)
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/Library-Scikit_Learn-orange?logo=scikit-learn&logoColor=white)
 ![Status](https://img.shields.io/badge/Competition-ADIKARA%202025-red)
 
-> **Proyek Machine Learning untuk memprediksi risiko gagal bayar (credit default) pada sektor UMKM & Mikro di Indonesia.**
+> **A Machine Learning project dedicated to predicting credit default risk within Indonesia's MSME & Micro sectors.**
 
-## 📌 Latar Belakang
+## 📌 Background
 
-Sektor keuangan mikro dan UMKM memegang peranan vital dalam pertumbuhan ekonomi Indonesia. Adopsi teknologi finansial (*fintech*) telah memperluas akses pembiayaan digital, namun juga memunculkan tantangan baru terkait manajemen risiko kredit.
+The Micro, Small, and Medium Enterprises (MSME) sector plays a vital role in Indonesia's economic growth. The adoption of financial technology (*fintech*) has expanded access to digital financing but has also introduced new challenges regarding credit risk management.
 
-Variasi latar belakang peminjam, jenis jaminan, dan karakteristik regional menyebabkan tingkat risiko yang beragam. Proyek ini bertujuan untuk membangun model klasifikasi biner yang dapat mengidentifikasi pola risiko dan memprediksi status gagal bayar nasabah secara akurat.
+Due to variations in borrower backgrounds, collateral types, and regional characteristics, risk levels vary significantly. This project aims to build a binary classification model to identify risk patterns and accurately predict customer default status.
 
-## 🎯 Tujuan Proyek
+## 🎯 Project Objectives
 
-1.  **Klasifikasi Risiko:** Memprediksi status nasabah: `0` (Lancar/Non-default) atau `1` (Macet/Default).
-2.  **Optimasi Metrik:** Menggunakan **Macro-averaged F1 Score** sebagai metrik evaluasi utama untuk menangani ketidakseimbangan kelas (*class imbalance*).
-3.  **Analisis Faktor:** Mengidentifikasi karakteristik peminjam dan bisnis yang paling mempengaruhi risiko kredit.
+1.  **Risk Classification:** Predict customer status: `0` (Non-default/Safe) or `1` (Default/Risk).
+2.  **Metric Optimization:** Utilize **Macro-averaged F1 Score** as the primary evaluation metric to effectively handle class imbalance.
+3.  **Factor Analysis:** Identify the borrower and business characteristics that most significantly influence credit risk.
 
-## 🛠️ Metodologi & Alur Kerja
+## 🛠️ Methodology & Workflow
 
-Pendekatan teknis yang dilakukan dalam repositori ini mencakup langkah-langkah *end-to-end* berikut:
-
-
+The technical approach implemented in this repository covers the following *end-to-end* steps:
 
 ### 1. Data Preprocessing & Cleaning
-* **Handling Missing Values:** Mengisi nilai kosong dan menangani nilai *infinite* untuk menjaga stabilitas model.
-* **Datetime Extraction:** Mengekstrak fitur temporal (`Tahun`, `Bulan`) dari kolom `tanggal_pencairan` untuk menangkap pola musiman.
+* **Handling Missing Values:** Imputing empty values and handling *infinite* values to maintain model stability.
+* **Datetime Extraction:** Extracting temporal features (`Year`, `Month`) from the `tanggal_pencairan` (disbursement date) column to capture seasonal patterns.
 
-### 2. Feature Engineering (Rekayasa Fitur)
-Membuat fitur turunan baru untuk memperkaya informasi finansial nasabah:
-* `bunga_nominal`: Selisih total pengembalian dengan pokok pinjaman.
-* `bunga_persen`: Persentase bunga terhadap pokok pinjaman.
-* `cicilan_harian`: Estimasi beban harian nasabah (`total_pengembalian` / `durasi_hari`).
-* `ratio_lender`: Proporsi pengembalian yang menjadi hak pemberi pinjaman (*lender*).
+### 2. Feature Engineering
+Creating new derived features to enrich customer financial information:
+* `bunga_nominal`: Difference between total repayment and principal loan amount.
+* `bunga_persen`: Percentage of interest relative to the principal.
+* `cicilan_harian`: Estimated daily burden (`total_pengembalian` / `durasi_hari`).
+* `ratio_lender`: Proportion of repayment allocated to the lender.
 
 ### 3. Encoding
-Mengubah variabel kategorikal menjadi format numerik menggunakan **Label Encoding**:
-* `provinsi`, `jenis_pinjaman`, `status_peminjam`, `sektor_usaha`, `pendidikan`, `jenis_jaminan`.
+Converting categorical variables into numerical format using **Label Encoding**:
+* `provinsi` (province), `jenis_pinjaman` (loan type), `status_peminjam` (borrower status), `sektor_usaha` (business sector), `pendidikan` (education), `jenis_jaminan` (collateral type).
 
-### 4. Pemodelan (Modeling)
-Algoritma yang digunakan adalah **Random Forest Classifier** dengan konfigurasi khusus untuk menangani data yang tidak seimbang:
+### 4. Modeling
+The algorithm used is the **Random Forest Classifier**, specifically configured to handle imbalanced data:
 * **Algorithm:** Random Forest
-* **Class Weight:** `balanced` (Memberikan bobot lebih pada kelas minoritas/macet).
+* **Class Weight:** `balanced` (Assigns higher weight to the minority/default class).
 * **Estimators:** 200 trees.
-* **Max Depth:** 15 (Untuk mencegah overfitting).
+* **Max Depth:** 15 (To prevent overfitting).
 
-## 📊 Evaluasi Model
+## 📊 Model Evaluation
 
-Model dievaluasi menggunakan **Macro F1-Score**. Metrik ini dipilih karena menghitung rata-rata harmonik antara *Precision* dan *Recall* untuk setiap kelas secara independen, sehingga memberikan gambaran performa yang adil meskipun jumlah data kelas "Macet" jauh lebih sedikit daripada "Lancar".
+The model is evaluated using the **Macro F1-Score**. This metric was chosen because it calculates the harmonic mean of *Precision* and *Recall* for each class independently. This provides a fair performance overview, ensuring the model is not biased towards the majority class ("Non-default") despite the "Default" class being significantly smaller.
 
-## 📂 Struktur Repository
+## 📂 Repository Structure
 
 ```text
-├── notebooks/          # Jupyter Notebooks untuk eksplorasi dan training
-├── submission/         # Hasil prediksi (CSV)
-├── README.md           # Dokumentasi Proyek
-└── requirements.txt    # Dependencies library
+├── notebooks/          # Jupyter Notebooks for exploration and training
+├── submission/         # Prediction results (CSV)
+├── README.md           # Project Documentation
+└── requirements.txt    # Library dependencies
