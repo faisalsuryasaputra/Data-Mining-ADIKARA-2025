@@ -1,0 +1,10 @@
+Requirement:
+pandas
+numpy
+scikit-learn
+kagglehub
+Cara Menggunakan:
+Siapapun yang ingin menjalankan kode kamu cukup mengetik perintah ini di terminal:
+
+Bash:
+pip install -r requirements.txt
