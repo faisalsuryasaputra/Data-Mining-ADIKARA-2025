@@ -1,25 +1,60 @@
-# Data-Mining-ADIKARA-2025
+# 🇮🇩 Indonesian Credit Default Prediction (ADIKARA 2025)
 
-### Indonesian Credit Default Prediction (ADIKARA 2025)
-This repository contains a machine learning implementation for predicting credit default status in the microfinance and MSME (Micro, Small, and Medium Enterprises) sector in Indonesia, using the dataset from ADIKARA 2025 – Indonesian Credit Score, organized by PRODIGI: Digital Talent Centre.
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![Scikit-Learn](https://img.shields.io/badge/Library-Scikit--Learn-orange)
+![Status](https://img.shields.io/badge/Competition-ADIKARA%202025-red)
 
-### Background
-The microfinance and MSME sector plays a crucial role in Indonesia’s economic growth, as the majority of businesses operate at small and medium scales. In recent years, the rapid adoption of financial technology (fintech) has significantly expanded access to digital financing, enabling many business owners—especially those previously underserved by traditional financial institutions—to obtain working capital and trade financing.
-However, this rapid growth also introduces new challenges, particularly related to credit risk management and default rates. Variations in business sectors, borrowers’ backgrounds, collateral types, and regional characteristics contribute to differing levels of credit risk. Therefore, data-driven analysis and artificial intelligence are increasingly important to identify risk patterns and support sustainable financing growth.
+> **Proyek Machine Learning untuk memprediksi risiko gagal bayar (credit default) pada sektor UMKM & Mikro di Indonesia.**
 
-### Project Objectives
-Develop a binary classification model to predict credit default status
-(0 = non-default, 1 = default).
-Optimize model performance using Macro-averaged F1 Score as the primary evaluation metric.
-Analyze the impact of borrower, business, and regional characteristics on credit risk.
+## 📌 Latar Belakang
 
-### Approach
-This project includes the following stages:
-Data preprocessing and feature engineering
-Exploratory Data Analysis (EDA)
-Machine learning model training and evaluation
-Model optimization based on Macro F1-Score
-Generation of Kaggle-compatible submission files
+Sektor keuangan mikro dan UMKM memegang peranan vital dalam pertumbuhan ekonomi Indonesia. Adopsi teknologi finansial (*fintech*) telah memperluas akses pembiayaan digital, namun juga memunculkan tantangan baru terkait manajemen risiko kredit.
 
-### Evaluation Metric
-Models are evaluated using Macro-averaged F1 Score, which calculates the F1-score for each class independently and then averages them. This metric assigns equal importance to each class and is suitable for handling potential class imbalance in credit default data.
+Variasi latar belakang peminjam, jenis jaminan, dan karakteristik regional menyebabkan tingkat risiko yang beragam. Proyek ini bertujuan untuk membangun model klasifikasi biner yang dapat mengidentifikasi pola risiko dan memprediksi status gagal bayar nasabah secara akurat.
+
+## 🎯 Tujuan Proyek
+
+1.  **Klasifikasi Risiko:** Memprediksi status nasabah: `0` (Lancar/Non-default) atau `1` (Macet/Default).
+2.  **Optimasi Metrik:** Menggunakan **Macro-averaged F1 Score** sebagai metrik evaluasi utama untuk menangani ketidakseimbangan kelas (*class imbalance*).
+3.  **Analisis Faktor:** Mengidentifikasi karakteristik peminjam dan bisnis yang paling mempengaruhi risiko kredit.
+
+## 🛠️ Metodologi & Alur Kerja
+
+Pendekatan teknis yang dilakukan dalam repositori ini mencakup langkah-langkah *end-to-end* berikut:
+
+
+
+### 1. Data Preprocessing & Cleaning
+* **Handling Missing Values:** Mengisi nilai kosong dan menangani nilai *infinite* untuk menjaga stabilitas model.
+* **Datetime Extraction:** Mengekstrak fitur temporal (`Tahun`, `Bulan`) dari kolom `tanggal_pencairan` untuk menangkap pola musiman.
+
+### 2. Feature Engineering (Rekayasa Fitur)
+Membuat fitur turunan baru untuk memperkaya informasi finansial nasabah:
+* `bunga_nominal`: Selisih total pengembalian dengan pokok pinjaman.
+* `bunga_persen`: Persentase bunga terhadap pokok pinjaman.
+* `cicilan_harian`: Estimasi beban harian nasabah (`total_pengembalian` / `durasi_hari`).
+* `ratio_lender`: Proporsi pengembalian yang menjadi hak pemberi pinjaman (*lender*).
+
+### 3. Encoding
+Mengubah variabel kategorikal menjadi format numerik menggunakan **Label Encoding**:
+* `provinsi`, `jenis_pinjaman`, `status_peminjam`, `sektor_usaha`, `pendidikan`, `jenis_jaminan`.
+
+### 4. Pemodelan (Modeling)
+Algoritma yang digunakan adalah **Random Forest Classifier** dengan konfigurasi khusus untuk menangani data yang tidak seimbang:
+* **Algorithm:** Random Forest
+* **Class Weight:** `balanced` (Memberikan bobot lebih pada kelas minoritas/macet).
+* **Estimators:** 200 trees.
+* **Max Depth:** 15 (Untuk mencegah overfitting).
+
+## 📊 Evaluasi Model
+
+Model dievaluasi menggunakan **Macro F1-Score**. Metrik ini dipilih karena menghitung rata-rata harmonik antara *Precision* dan *Recall* untuk setiap kelas secara independen, sehingga memberikan gambaran performa yang adil meskipun jumlah data kelas "Macet" jauh lebih sedikit daripada "Lancar".
+
+## 📂 Struktur Repository
+
+```text
+├── data/               # Folder dataset (tidak disertakan dalam repo jika privat)
+├── notebooks/          # Jupyter Notebooks untuk eksplorasi dan training
+├── submission/         # Hasil prediksi (CSV)
+├── README.md           # Dokumentasi Proyek
+└── requirements.txt    # Dependencies library
