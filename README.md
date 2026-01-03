@@ -53,7 +53,6 @@ Model dievaluasi menggunakan **Macro F1-Score**. Metrik ini dipilih karena mengh
 ## 📂 Struktur Repository
 
 ```text
-├── data/               # Folder dataset (tidak disertakan dalam repo jika privat)
 ├── notebooks/          # Jupyter Notebooks untuk eksplorasi dan training
 ├── submission/         # Hasil prediksi (CSV)
 ├── README.md           # Dokumentasi Proyek
